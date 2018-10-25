@@ -1,0 +1,26 @@
+{
+    "name": "waughj/wp-post-link",
+    "description": "A simpler way to get link HTML by passing a post slug, ID, or WP_Post object.",
+    "keywords": [ "wordpress", "link", "post", "html" ],
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Jaimeson Waugh",
+            "email": "waughjai@gmail.com"
+        }
+    ],
+    "type": "library",
+    "require": {
+		"php": ">=7.0",
+		"waughj/html-link": ">=1.0.0",
+		"waughj/test-hash-item": ">=1.0.1"
+    },
+    "require-dev": {
+		"phpunit/phpunit": "6.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "WaughJ\\WPPostLink\\": "src/"
+        }
+    }
+}
