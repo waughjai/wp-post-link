@@ -1,4 +1,4 @@
-Composer Template
+WP Post Link
 =========================
 
-Template for easily making composer projects.
+A simpler way to get link HTML by passing a post slug, ID, or WP_Post object.
