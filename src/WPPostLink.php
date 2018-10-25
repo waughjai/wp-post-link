@@ -24,13 +24,13 @@ namespace WaughJ\WPPostLink
 			{
 				return get_page_by_path( $atts[ 'slug' ], OBJECT, $post_type );
 			}
-			else if ( TestHashItemString( $atts, 'id' ) )
+			else if ( isset( $atts[ 'post-id' ] ) )
 			{
-				return get_post( $atts[ 'id' ] );
+				return get_post( intval( $atts[ 'post-id' ] ) );
 			}
-			else if ( TestHashItemString( $atts, 'title' ) )
+			else if ( TestHashItemString( $atts, 'post-title' ) )
 			{
-				return get_page_by_title( $atts[ 'title' ], OBJECT, $post_type );
+				return get_page_by_title( $atts[ 'post-title' ], OBJECT, $post_type );
 			}
 			else
 			{

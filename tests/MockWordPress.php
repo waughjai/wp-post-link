@@ -50,3 +50,17 @@
 			}
 		}
 	}
+
+	function get_page_by_title( $title )
+	{
+		global $posts;
+		$number_of_posts = count( $posts );
+		for ( $i = 0; $i <= $number_of_posts; $i++ )
+		{
+			$post = $posts[ $i ];
+			if ( $post[ 'title' ] === $title )
+			{
+				return get_post( $i );
+			}
+		}
+	}
