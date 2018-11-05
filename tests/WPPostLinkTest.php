@@ -15,7 +15,7 @@ class WPPostLinkTest extends TestCase
 		$this->assertEquals( get_class( $selected_post ), WP_Post::class );
 		$post_link = new WPPostLink( [ 'post' => $selected_post ] );
 		$this->assertEquals( $post_link->getURL(), $posts[ $id ][ 'url' ] );
-		$this->assertEquals( $post_link->getText(), $posts[ $id ][ 'title' ] );
+		$this->assertEquals( $post_link->getValue(), $posts[ $id ][ 'title' ] );
 		$this->assertEquals( $post_link->getHTML(), '<a href="' . $posts[ $id ][ 'url' ] . '">' . $posts[ $id ][ 'title' ] . '</a>' );
 	}
 
@@ -23,7 +23,7 @@ class WPPostLinkTest extends TestCase
 	{
 		$post_link = new WPPostLink([ 'slug' => 'google' ]);
 		$this->assertEquals( $post_link->getURL(), 'https://www.google.com' );
-		$this->assertEquals( $post_link->getText(), 'Google' );
+		$this->assertEquals( $post_link->getValue(), 'Google' );
 		$this->assertEquals( $post_link->getHTML(), '<a href="https://www.google.com">Google</a>' );
 	}
 
@@ -31,7 +31,7 @@ class WPPostLinkTest extends TestCase
 	{
 		$post_link = new WPPostLink([ 'post-id' => 1 ]);
 		$this->assertEquals( $post_link->getURL(), 'https://www.google.com' );
-		$this->assertEquals( $post_link->getText(), 'Google' );
+		$this->assertEquals( $post_link->getValue(), 'Google' );
 		$this->assertEquals( $post_link->getHTML(), '<a href="https://www.google.com">Google</a>' );
 	}
 
@@ -39,15 +39,15 @@ class WPPostLinkTest extends TestCase
 	{
 		$post_link = new WPPostLink([ 'post-title' => 'Google' ]);
 		$this->assertEquals( $post_link->getURL(), 'https://www.google.com' );
-		$this->assertEquals( $post_link->getText(), 'Google' );
+		$this->assertEquals( $post_link->getValue(), 'Google' );
 		$this->assertEquals( $post_link->getHTML(), '<a href="https://www.google.com">Google</a>' );
 	}
 
 	public function testPostLinkWithAnchor() : void
 	{
 		$post_link = new WPPostLink([ 'post-title' => 'Google', 'anchor' => 'top' ]);
-		$this->assertEquals( $post_link->getURL(), 'https://www.google.com' );
-		$this->assertEquals( $post_link->getText(), 'Google' );
+		$this->assertEquals( $post_link->getURL(), 'https://www.google.com#top' );
+		$this->assertEquals( $post_link->getValue(), 'Google' );
 		$this->assertEquals( $post_link->getHTML(), '<a href="https://www.google.com#top">Google</a>' );
 	}
 }
