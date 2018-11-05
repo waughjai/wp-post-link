@@ -27,9 +27,17 @@ class WPPostLinkTest extends TestCase
 		$this->assertEquals( $post_link->getHTML(), '<a href="https://www.google.com">Google</a>' );
 	}
 
+	public function testPostLinkBySlugWithType() : void
+	{
+		$post_link = new WPPostLink([ 'slug' => 'google', 'post_type' => 'not_google' ]);
+		$this->assertEquals( $post_link->getURL(), 'google' );
+		$this->assertEquals( $post_link->getValue(), 'google' );
+		$this->assertThat( $post_link->getHTML(), $this->logicalNot( $this->stringContains( 'https://www.google.com' ) ) );
+	}
+
 	public function testPostLinkByID() : void
 	{
-		$post_link = new WPPostLink([ 'post-id' => 1 ]);
+		$post_link = new WPPostLink([ 'post_id' => 1 ]);
 		$this->assertEquals( $post_link->getURL(), 'https://www.google.com' );
 		$this->assertEquals( $post_link->getValue(), 'Google' );
 		$this->assertEquals( $post_link->getHTML(), '<a href="https://www.google.com">Google</a>' );
@@ -37,7 +45,7 @@ class WPPostLinkTest extends TestCase
 
 	public function testPostLinkByTitle() : void
 	{
-		$post_link = new WPPostLink([ 'post-title' => 'Google' ]);
+		$post_link = new WPPostLink([ 'post_title' => 'Google' ]);
 		$this->assertEquals( $post_link->getURL(), 'https://www.google.com' );
 		$this->assertEquals( $post_link->getValue(), 'Google' );
 		$this->assertEquals( $post_link->getHTML(), '<a href="https://www.google.com">Google</a>' );
@@ -45,7 +53,7 @@ class WPPostLinkTest extends TestCase
 
 	public function testPostLinkWithAnchor() : void
 	{
-		$post_link = new WPPostLink([ 'post-title' => 'Google', 'anchor' => 'top' ]);
+		$post_link = new WPPostLink([ 'post_title' => 'Google', 'anchor' => 'top' ]);
 		$this->assertEquals( $post_link->getURL(), 'https://www.google.com#top' );
 		$this->assertEquals( $post_link->getValue(), 'Google' );
 		$this->assertEquals( $post_link->getHTML(), '<a href="https://www.google.com#top">Google</a>' );

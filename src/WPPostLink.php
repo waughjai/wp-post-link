@@ -12,25 +12,33 @@ namespace WaughJ\WPPostLink
 		public function __construct( array $atts )
 		{
 			$post = ( isset( $atts[ 'post' ] ) && is_a( $atts[ 'post' ], '\WP_Post' ) ) ? $atts[ 'post' ] : self::getPage( $atts );
-			$url = get_permalink( $post );
-			$text = TestHashItemExists( $atts, 'text', $post->post_title );
-			parent::__construct( $url, $text, $atts );
+			if ( $post !== null )
+			{
+				$url = get_permalink( $post );
+				$value = TestHashItemExists( $atts, 'value', $post->post_title );
+			}
+			else
+			{
+				$url = TestHashItemString( $atts, 'slug', '' );
+				$value = TestHashItemExists( $atts, 'value', $url );
+			}
+			parent::__construct( $url, $value, $atts );
 		}
 
 		private static function getPage( array $atts )
 		{
-			$post_type = TestHashItemString( $atts, 'post-type', 'page' );
+			$post_type = TestHashItemString( $atts, 'post_type', 'page' );
 			if ( TestHashItemString( $atts, 'slug' ) )
 			{
 				return get_page_by_path( $atts[ 'slug' ], OBJECT, $post_type );
 			}
-			else if ( isset( $atts[ 'post-id' ] ) )
+			else if ( isset( $atts[ 'post_id' ] ) )
 			{
-				return get_post( intval( $atts[ 'post-id' ] ) );
+				return get_post( intval( $atts[ 'post_id' ] ) );
 			}
-			else if ( TestHashItemString( $atts, 'post-title' ) )
+			else if ( TestHashItemString( $atts, 'post_title' ) )
 			{
-				return get_page_by_title( $atts[ 'post-title' ], OBJECT, $post_type );
+				return get_page_by_title( $atts[ 'post_title' ], OBJECT, $post_type );
 			}
 			else
 			{

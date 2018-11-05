@@ -4,8 +4,8 @@
 	global $posts;
 	$posts =
 	[
-		[ 'url' => 'https://www.jaimeson-waugh.com', 'title' => 'Jaimeson Waugh', 'slug' => 'jaimeson-waugh' ],
-		[ 'url' => 'https://www.google.com',         'title' => 'Google'        , 'slug' => 'google'         ]
+		[ 'url' => 'https://www.jaimeson-waugh.com', 'title' => 'Jaimeson Waugh', 'slug' => 'jaimeson-waugh', 'type' => 'not_google' ],
+		[ 'url' => 'https://www.google.com',         'title' => 'Google'        , 'slug' => 'google'        , 'type' => 'google' ]
 	];
 
 	class WP_Post
@@ -37,18 +37,19 @@
 		return null;
 	}
 
-	function get_page_by_path( $slug )
+	function get_page_by_path( $slug, $output, string $type )
 	{
 		global $posts;
 		$number_of_posts = count( $posts );
-		for ( $i = 0; $i <= $number_of_posts; $i++ )
+		for ( $i = 0; $i < $number_of_posts; $i++ )
 		{
 			$post = $posts[ $i ];
-			if ( $post[ 'slug' ] === $slug )
+			if ( $post[ 'slug' ] === $slug && ( $type === 'page' || $type === $post[ 'type' ] ) )
 			{
 				return get_post( $i );
 			}
 		}
+		return null;
 	}
 
 	function get_page_by_title( $title )
