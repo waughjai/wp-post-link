@@ -37,14 +37,20 @@
 		return null;
 	}
 
-	function get_page_by_path( $slug, $output, string $type )
+	function get_page_by_path( $slug, $output, $types )
 	{
 		global $posts;
+
+		if ( !is_array( $types ) )
+		{
+			$types = [ $types ];
+		}
+
 		$number_of_posts = count( $posts );
 		for ( $i = 0; $i < $number_of_posts; $i++ )
 		{
 			$post = $posts[ $i ];
-			if ( $post[ 'slug' ] === $slug && ( $type === 'page' || $type === $post[ 'type' ] ) )
+			if ( $post[ 'slug' ] === $slug && in_array( $slug, $types ) )
 			{
 				return get_post( $i );
 			}
@@ -64,4 +70,9 @@
 				return get_post( $i );
 			}
 		}
+	}
+
+	function get_post_types()
+	{
+		return [ 'page', 'post', 'google', 'not-google' ];
 	}

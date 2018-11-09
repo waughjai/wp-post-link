@@ -27,7 +27,7 @@ namespace WaughJ\WPPostLink
 
 		private static function getPage( array $atts )
 		{
-			$post_type = TestHashItemString( $atts, 'post_type', 'page' );
+			$post_type = TestHashItemString( $atts, 'post_type', get_post_types() );
 			if ( TestHashItemString( $atts, 'slug' ) )
 			{
 				return get_page_by_path( $atts[ 'slug' ], OBJECT, $post_type );
