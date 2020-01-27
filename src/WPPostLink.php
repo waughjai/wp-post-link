@@ -27,11 +27,7 @@ class WPPostLink extends HTMLLink
 	private static function getPage( array $atts )
 	{
 		$post_type = TestHashItem::getString( $atts, 'post_type', get_post_types() );
-		if ( TestHashItem::getString( $atts, 'slug' ) )
-		{
-			return get_page_by_path( $atts[ 'slug' ], OBJECT, $post_type );
-		}
-		else if ( isset( $atts[ 'post_id' ] ) )
+		if ( isset( $atts[ 'post_id' ] ) )
 		{
 			return get_post( intval( $atts[ 'post_id' ] ) );
 		}
@@ -41,7 +37,17 @@ class WPPostLink extends HTMLLink
 		}
 		else
 		{
-			return null;
+			if ( TestHashItem::getString( $atts, 'slug' ) )
+			{
+				$atts[ 'name' ] = $atts[ 'slug' ];
+				unset( $atts[ 'slug' ] );
+			}
+			$posts = get_posts( $atts );
+			if ( empty( $posts ) )
+			{
+				return null;
+			}
+			return $posts[ 0 ];
 		}
 	}
 }

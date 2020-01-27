@@ -62,7 +62,7 @@
 	{
 		global $posts;
 		$number_of_posts = count( $posts );
-		for ( $i = 0; $i <= $number_of_posts; $i++ )
+		for ( $i = 0; $i < $number_of_posts; $i++ )
 		{
 			$post = $posts[ $i ];
 			if ( $post[ 'title' ] === $title )
@@ -75,4 +75,26 @@
 	function get_post_types()
 	{
 		return [ 'page', 'post', 'google', 'not-google' ];
+	}
+
+	function get_posts( $args )
+	{
+		global $posts;
+		$number_of_posts = count( $posts );
+		$out = [];
+		if ( array_key_exists( 'name', $args ) )
+		{
+			for ( $i = 0; $i < $number_of_posts; $i++ )
+			{
+				$post = $posts[ $i ];
+				if ( $post[ 'slug' ] === $args[ 'name' ] )
+				{
+					if ( !array_key_exists( 'post_type', $args ) || $args[ 'post_type' ] === $post[ 'type' ] )
+					{
+						$out[] = get_post( $i );
+					}
+				}
+			}
+		}
+		return $out;
 	}
